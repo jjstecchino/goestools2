@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
-project(goesdec CXX C)
+project(goestools2 CXX C)
 
 # Remove directory from CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES and add it
 # to the link directories list. This is needed to prioritize the
@@ -90,12 +90,12 @@ add_subdirectory(src/dcs)
 add_subdirectory(src/decoder)
 add_subdirectory(src/assembler)
 
-option(BUILD_GOESRECV "Build goesrecv" ON)
+option(BUILD_GOESRECV "Build goesd" ON)
 if(${BUILD_GOESRECV})
-  add_subdirectory(src/goesrecv)
+  add_subdirectory(src/goesd)
 endif()
 
-option(BUILD_GOESLRIT "Build goeslrit" ON)
+option(BUILD_GOESLRIT "Build goeslrit" OFF)
 if(${BUILD_GOESLRIT})
   add_subdirectory(src/goeslrit)
 endif()
@@ -107,7 +107,7 @@ if(${BUILD_GOESEMWIN})
   add_subdirectory(src/goesemwin)
 endif()
 
-option(BUILD_GOESPROC "Build goesproc" ON)
+option(BUILD_GOESPROC "Build goesproc" OFF)
 if(${BUILD_GOESPROC})
   add_subdirectory(src/goesproc)
 
@@ -142,7 +142,7 @@ if(${BUILD_GOESPROC})
     COMPONENT goestools)
 endif()
 
-option(BUILD_GOESPACKETS "Build goespackets" ON)
+option(BUILD_GOESPACKETS "Build goespackets" OFF)
 if(${BUILD_GOESPACKETS})
   add_subdirectory(src/goespackets)
 endif()
