@@ -1,12 +1,12 @@
-add_library(dir dir.cc)
-add_library(zip zip.cc)
-add_library(timer timer.cc)
+add_library(dir dir.cpp)
+add_library(zip zip.cpp)
+add_library(timer timer.cpp)
 target_link_libraries(zip z)
-add_library(packet_reader packet_reader.cc nanomsg_reader.cc file_reader.cc)
+add_library(packet_reader packet_reader.cpp nanomsg_reader.cpp file_reader.cpp)
 target_link_libraries(packet_reader nanomsg)
-add_library(packet_writer packet_writer.cc nanomsg_writer.cc file_writer.cc)
+add_library(packet_writer packet_writer.cpp nanomsg_writer.cpp file_writer.cpp)
 target_link_libraries(packet_writer nanomsg)
-add_executable(unzip unzip.cc)
+add_executable(unzip unzip.cpp)
 target_link_libraries(unzip zip m stdc++)
 
 # Get the latest abbreviated commit hash of the working branch
@@ -31,5 +31,5 @@ configure_file(
   ${CMAKE_BINARY_DIR}/include/version-gen.h
   )
 
-add_library(version version.cc)
+add_library(version version.cpp)
 target_include_directories(version PRIVATE ${CMAKE_BINARY_DIR}/include)
