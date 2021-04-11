@@ -2,6 +2,7 @@
 
 #include <array>
 #include <ctime>
+#include <stdint.h>
 
 // PacketWriter is an abstract base class for things that write packets.
 class PacketWriter {
