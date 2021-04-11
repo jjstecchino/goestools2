@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
-project(goesdec CXX C)
+project(goesdecoder CXX C)
 
 # Remove directory from CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES and add it
 # to the link directories list. This is needed to prioritize the
