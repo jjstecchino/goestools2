@@ -35,6 +35,9 @@ public:
 
     // Number of Viterbi corrected bits
     int viterbiBits;
+    
+    // Number of Viterbi corrected bits
+    int viterbiBER;
 
     // Number of Reed-Solomon corrected bytes
     // This is -1 if the packet was not correctable

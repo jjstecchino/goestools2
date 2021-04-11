@@ -20,7 +20,7 @@ set(GOESPROC_SRCS
   )
 
 find_package(PkgConfig)
-pkg_check_modules(OPENCV REQUIRED opencv)
+pkg_check_modules(OpenCV REQUIRED opencv4)
 pkg_check_modules(PROJ proj)
 
 if(PROJ_FOUND)
@@ -36,9 +36,10 @@ target_link_libraries(goesproc nlohmann_json)
 target_link_libraries(goesproc timer)
 target_link_libraries(goesproc version)
 
-if(OPENCV_FOUND)
+if(OpenCV_FOUND)
+  include_directories( ${OpenCV_INCLUDE_DIRS} )
   target_link_libraries(goesproc opencv_core opencv_highgui opencv_imgproc)
-  if(${OPENCV_VERSION} VERSION_GREATER 3.0)
+  if(${OpenCV_VERSION} VERSION_GREATER 3.0)
     target_link_libraries(goesproc opencv_imgcodecs)
   endif()
 endif()

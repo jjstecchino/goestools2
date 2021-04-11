@@ -27,6 +27,7 @@ protected:
 
     // Decoder stats
     std::vector<int> viterbiErrors;
+    std::vector<int> viterbiBER;
     std::vector<int> reedSolomonErrors;
     int totalOK = 0;
     int totalDropped = 0;

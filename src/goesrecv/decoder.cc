@@ -93,6 +93,7 @@ void Decoder::publishStats(decoder::Packetizer::Details details) {
   ss << "\"timestamp\": \"" << timestamp << "\",";
   ss << "\"skipped_symbols\": " << details.skippedSymbols << ",";
   ss << "\"viterbi_errors\": " << details.viterbiBits << ",";
+  ss << "\"viterbi BER\": " << details.viterbiBER << ",";
   ss << "\"reed_solomon_errors\": " << details.reedSolomonBytes << ",";
   ss << "\"ok\": " << details.ok;
   ss << "}\n";

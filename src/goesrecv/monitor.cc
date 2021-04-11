@@ -197,6 +197,11 @@ void Monitor::process(const std::string& json) {
       continue;
     }
 
+    if (key == "viterbi_BER") {
+      stats_.viterbiBER.push_back(value.get<int>());
+      statsd << key << ":" << value.get<int>() << "|h" << std::endl;
+      continue;
+    }
     if (key == "reed_solomon_errors") {
       const auto& v = value.get<int>();
       if (v >= 0) {
@@ -253,6 +258,9 @@ void Monitor::print(const Stats& stats) {
   ss << "vit(avg): "
      << std::setw(4)
      << avg(stats.viterbiErrors) << ", ";
+  ss << "vit(BER): "
+     << std::setw(4)
+     << avg(stats.viterbiBER) << ", ";
   ss << "rs(sum): "
      << std::setw(4)
      << sum(stats.reedSolomonErrors) << ", ";
