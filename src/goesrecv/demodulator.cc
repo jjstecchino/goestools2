@@ -19,7 +19,7 @@ Demodulator::Demodulator(Demodulator::Type t) {
     ASSERT(false);
   }
 
-  // Sample rate depends on source
+  // Sample rate depends on source SDR capability and settings
   sampleRate_ = 0;
 
   // Initialize queues

@@ -7,11 +7,20 @@
             "type": "cppdbg",
             "request": "launch",
             // Resolved by CMake Tools:
+
             "program": "${command:cmake.launchTargetPath}",
-            "args": ["-c/usr/local/share/goestools/goesproc-goesr.conf", 
-                     "-mpacket", 
-                     "--subscribe", "tcp://192.168.100.233:5004", 
-                     "--out", "~/GoesPics/"],
+
+            // command line arguments for goesproc - comment one not in use
+            // "args": ["-c/usr/local/share/goestools/goesproc-goesr.conf", 
+            //          "-mpacket", 
+            //          "--subscribe", "tcp://192.168.100.233:5004", 
+            //          "--out", "~/GoesPics/"],
+
+            // command line arguments for goesrcv - comment one not in use
+            "args": ["-c/home/claudio/goestools2/etc/goesrecv.conf",
+                     "-v",
+                     "-i1"],
+
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [
