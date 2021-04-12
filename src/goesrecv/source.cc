@@ -115,7 +115,7 @@ std::unique_ptr<Source> Source::build(
     hackrf->setIfGain(config.hackrf.if_gain);
     hackrf->setBbGain(config.hackrf.bb_gain);
     hackrf->setBiasTee(config.hackrf.bias_tee);
-    hackrf->setSamplePublisher(std::move(config.airspy.samplePublisher));
+    hackrf->setSamplePublisher(std::move(config.hackrf.samplePublisher));
     return std::unique_ptr<Source>(hackrf.release());
 #else
     throw std::runtime_error(
