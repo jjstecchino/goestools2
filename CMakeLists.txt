@@ -117,8 +117,8 @@ if(${BUILD_GOESPROC})
     "${PROJECT_BINARY_DIR}/share/goesproc-goesn.conf")
   install(
     FILES "${PROJECT_BINARY_DIR}/share/goesproc-goesn.conf"
-    DESTINATION share/goestools
-    COMPONENT goestools)
+    DESTINATION share/goestools2
+    COMPONENT goestools2)
 
   # Process and install GOES-R series example config
   configure_file(
@@ -126,20 +126,20 @@ if(${BUILD_GOESPROC})
     "${PROJECT_BINARY_DIR}/share/goesproc-goesr.conf")
   install(
     FILES "${PROJECT_BINARY_DIR}/share/goesproc-goesr.conf"
-    DESTINATION share/goestools
-    COMPONENT goestools)
+    DESTINATION share/goestools2
+    COMPONENT goestools2)
 
   # Install contrast curve and false color LUT
   install(
     DIRECTORY share/wxstar
-    DESTINATION share/goestools
-    COMPONENT goestools)
+    DESTINATION share/goestools2
+    COMPONENT goestools2)
 
   # Install Natural Earth GeoJSON files for map overlays
   install(
     DIRECTORY share/ne
-    DESTINATION share/goestools
-    COMPONENT goestools)
+    DESTINATION share/goestools2
+    COMPONENT goestools2)
 endif()
 
 option(BUILD_GOESPACKETS "Build goespackets" ON)
