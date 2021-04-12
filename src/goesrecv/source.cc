@@ -10,6 +10,10 @@
 #include "rtlsdr_source.h"
 #endif
 
+#ifdef BUILD_HACKRF
+#include "hackrf_source.h"
+#endif
+
 #include "nanomsg_source.h"
 
 std::unique_ptr<Source> Source::build(
@@ -76,6 +80,49 @@ std::unique_ptr<Source> Source::build(
       "but goesrecv was not compiled with RTL-SDR support. "
       "Make sure to install the RTL-SDR library before compiling goestools, "
       "and look for a message saying 'Found librtlsdr' when running cmake."
+      );
+#endif
+  }
+  if (type == "hackrf") {
+#ifdef BUILD_HACKRF
+    auto hackrf = HackRf::open();
+
+    // Use sample rate if set, otherwise default to lowest possible rate.
+    // This is 2.5MSPS for the R2 and 3M for the Mini.
+    auto rates = hackrf->getSampleRates();
+    if (config.hackrf.sampleRate != 0) {
+      auto rate = config.hackrf.sampleRate;
+      auto pos = std::find(rates.begin(), rates.end(), rate);
+      if (pos == rates.end()) {
+        std::stringstream ss;
+        ss <<
+          "You configured the HackRf source to use an unsupported " <<
+          "sample rate equal to " << rate << ". " <<
+          "Supported sample rates are: " << std::endl;
+        for (size_t i = 0; i < rates.size(); i++) {
+          ss << " - " << rates[i] << std::endl;
+        }
+        throw std::runtime_error(ss.str());
+      }
+      hackrf->setSampleRate(rate);
+    } else {
+      std::sort(rates.begin(), rates.end());
+      hackrf->setSampleRate(rates[0]);
+    }
+
+    hackrf->setFrequency(config.hackrf.frequency);
+    hackrf->setRfAmplifier(config.hackrf.rf_amp_enabled);
+    hackrf->setIfGain(config.hackrf.if_gain);
+    hackrf->setBbGain(config.hackrf.bb_gain);
+    hackrf->setBiasTee(config.hackrf.bias_tee);
+    hackrf->setSamplePublisher(std::move(config.airspy.samplePublisher));
+    return std::unique_ptr<Source>(hackrf.release());
+#else
+    throw std::runtime_error(
+      "You configured goesrecv to use the \"hackrf\" source, "
+      "but goesrecv was not compiled with HackRf support. "
+      "Make sure to install the HackRf library before compiling goestools, "
+      "and look for a message saying 'Found libhackrf' when running cmake."
       );
 #endif
   }
