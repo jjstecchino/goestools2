@@ -9,6 +9,7 @@ extern "C" {
 }
 
 #include <util/error.h>
+#include <cmath>
 
 namespace decoder {
 
@@ -20,9 +21,9 @@ class Viterbi {
 #endif
 
 public:
-  struct Error {
-    ssize_t total;
-    double BER;
+  struct SignalQuality {
+    int viterbiErrors;
+    int strength;
   };
 
   Viterbi() {
@@ -69,24 +70,25 @@ public:
 #endif
   }
 
-  Error compareSoft(const uint8_t* original, const uint8_t* msg, size_t bytes) {
+  SignalQuality compareSoft(const uint8_t* original, const uint8_t* msg, size_t bytes) {
     auto bits = encodeLength(bytes);
     tmp_.resize((bits + 7) / 8);
     auto rv = encode(msg, bytes, tmp_.data());
     ASSERT(rv == bits);
 
     // Compare MSB of original (soft bits) with re-coded hard bit
-    Error error;
-    error.total = 0;
+    SignalQuality sq;
+    sq.viterbiErrors = 0;
     for (ssize_t i = 0; i < bits; i++) {
       uint8_t a = original[i];
       uint8_t b = tmp_[i / 8] << (i & 0x7);
-      error.total += ((a ^ b) & 0x80) >> 7;
+      sq.viterbiErrors += ((a ^ b) & 0x80) >> 7;
     }
 
-    error.BER = static_cast<double>(error.total) * 100.0 / bits;
+    // Use 1000 viterbi error as a treshold for 100% signal loss
+    sq.strength = 100 - std::ceil(static_cast<double>((std::min(sq.viterbiErrors, 1000))/10.0));
 
-    return error;
+    return sq;
   }
 
 private:

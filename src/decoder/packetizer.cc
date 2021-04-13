@@ -132,9 +132,9 @@ bool Packetizer::nextPacket(std::array<uint8_t, 892>& out, Details* details) {
 
     // Re-code packet to compute number of Viterbi corrected bits
     if (details) {
-      auto errors = viterbi_.compareSoft(&buf_[0], packet.data(), packet.size());
-      details->viterbiBits = errors.total;
-      details->viterbiBER = errors.BER;
+      auto signalQuality = viterbi_.compareSoft(&buf_[0], packet.data(), packet.size());
+      details->viterbiBits = signalQuality.viterbiErrors;
+      details->signalStrength = signalQuality.strength;
     }
 
     // Move tail bits of read buffer to beginning.
