@@ -86,7 +86,7 @@ public:
     }
 
     // Use 1000 viterbi error as a treshold for 100% signal loss
-    sq.strength = 100 - std::ceil(static_cast<double>((std::min(sq.viterbiErrors, 1000))/10.0));
+    sq.strength = 100 - std::round(static_cast<double>((std::min(sq.viterbiErrors, 1000))/10.0));
 
     return sq;
   }
